@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Meng\\Documents\\Note_Full_Stack\\Note_Full_Stack\\Note_Backend.csproj": {}
+    "C:\\Users\\Meng\\Documents\\Note_Backend\\Note_Backend\\Note_Backend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Meng\\Documents\\Note_Full_Stack\\Note_Full_Stack\\Note_Backend.csproj": {
+    "C:\\Users\\Meng\\Documents\\Note_Backend\\Note_Backend\\Note_Backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Meng\\Documents\\Note_Full_Stack\\Note_Full_Stack\\Note_Backend.csproj",
+        "projectUniqueName": "C:\\Users\\Meng\\Documents\\Note_Backend\\Note_Backend\\Note_Backend.csproj",
         "projectName": "Note_Backend",
-        "projectPath": "C:\\Users\\Meng\\Documents\\Note_Full_Stack\\Note_Full_Stack\\Note_Backend.csproj",
+        "projectPath": "C:\\Users\\Meng\\Documents\\Note_Backend\\Note_Backend\\Note_Backend.csproj",
         "packagesPath": "C:\\Users\\Meng\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Meng\\Documents\\Note_Full_Stack\\Note_Full_Stack\\obj\\",
+        "outputPath": "C:\\Users\\Meng\\Documents\\Note_Backend\\Note_Backend\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
