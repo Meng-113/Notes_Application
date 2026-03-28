@@ -40,13 +40,13 @@ async function handleSaveNote() {
 </script>
 
 <template>
-  <main class="min-h-screen bg-black text-white">
-    <div class="hidden md:grid md:min-h-screen md:grid-cols-[360px_1fr]">
+  <main class="h-screen overflow-hidden bg-black text-white">
+    <div class="hidden h-full min-h-0 md:grid md:grid-cols-[360px_1fr]">
       <NotesSidebar @select-note="handleSelectNote" @create-note="handleCreateNote" />
       <NoteEditor @save="handleSaveNote" @delete="handleDeleteNote" />
     </div>
 
-    <div class="md:hidden">
+    <div class="h-full min-h-0 md:hidden">
       <NotesSidebar
         v-if="mobileView === 'list'"
         @select-note="handleSelectNote"

@@ -21,16 +21,11 @@ const emit = defineEmits<{
 const notesStore = useNotesStore()
 
 const isEditing = computed(() => notesStore.selectedId !== null)
-
-function formatDateTime(value: string) {
-  const date = new Date(value)
-  return Number.isNaN(date.getTime()) ? 'Unknown date' : date.toLocaleString()
-}
 </script>
 
 <template>
-  <section class="flex min-h-screen flex-col bg-black">
-    <div class="flex items-center justify-between border-b border-neutral-900 px-4 py-3">
+  <section class="flex h-full min-h-0 flex-col bg-black">
+    <div class="shrink-0 flex items-center justify-between border-b border-neutral-900 px-4 py-3">
       <button
         v-if="showBackButton"
         @click="emit('back')"
@@ -65,18 +60,7 @@ function formatDateTime(value: string) {
     <textarea
       v-model="notesStore.editNote"
       placeholder=""
-      class="flex-1 resize-none bg-black px-5 py-5 text-lg leading-8 text-white outline-none placeholder:text-neutral-600"
+      class="flex-1 min-h-0 overflow-y-auto resize-none bg-black px-5 py-5 text-lg leading-8 text-white outline-none placeholder:text-neutral-600"
     />
-
-    <div class="border-t border-neutral-900 px-5 py-4 text-sm text-neutral-500">
-      <template v-if="notesStore.selectedNote">
-        <p>Created: {{ formatDateTime(notesStore.selectedNote.CreatedAt) }}</p>
-        <p class="mt-1">Updated: {{ formatDateTime(notesStore.selectedNote.UpdatedAt) }}</p>
-      </template>
-
-      <p v-if="notesStore.errorMessage" class="mt-3 text-red-400">
-        {{ notesStore.errorMessage }}
-      </p>
-    </div>
   </section>
 </template>
