@@ -8,3 +8,5 @@ Note_Frontend/.env
 .vs/
 bin/
 obj/
+
+.env
