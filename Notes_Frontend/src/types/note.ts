@@ -12,3 +12,9 @@ export interface NoteDraft {
 }
 
 export type FilterType = 'all' | 'with-content' | 'empty'
+
+export interface NoteSection {
+  id: string
+  label: string
+  notes: Note[]
+}

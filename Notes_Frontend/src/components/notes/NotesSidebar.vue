@@ -12,8 +12,8 @@ const emit = defineEmits<{
 const authStore = useAuthStore()
 const notesStore = useNotesStore()
 
-function formatDate(value: string) {
-  const date = new Date(value)
+function formatDate(note: Note) {
+  const date = new Date(note.UpdatedAt || note.CreatedAt)
   return Number.isNaN(date.getTime()) ? 'Unknown date' : date.toLocaleDateString()
 }
 
@@ -86,33 +86,39 @@ function handleLogout() {
     <div
       class="min-h-0 flex-1 overflow-y-auto px-4 py-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
     >
-      <div class="space-y-3">
+      <div class="space-y-6">
         <p v-if="notesStore.loading" class="text-sm text-neutral-400">Loading notes...</p>
         <p v-else-if="notesStore.visibleNotes.length === 0" class="text-sm text-neutral-500">
           No notes found.
         </p>
 
-        <button
-          v-for="note in notesStore.visibleNotes"
-          :key="note.Id"
-          class="w-full rounded-2xl border border-transparent bg-neutral-900 p-4 text-left transition hover:bg-neutral-800"
-          :class="{
-            'ring-1 ring-yellow-400': notesStore.selectedId === note.Id,
-          }"
-          @click="emit('select-note', note)"
-        >
-          <p class="truncate text-base font-semibold text-white">
-            {{ note.Title }}
-          </p>
+        <section v-for="section in notesStore.groupedNotes" :key="section.id" class="space-y-3">
+          <h2 class="px-1 text-lg font-semibold tracking-tight text-white">
+            {{ section.label }}
+          </h2>
 
-          <p v-if="getPreview(note)" class="mt-1 line-clamp-2 text-sm text-neutral-400">
-            {{ getPreview(note) }}
-          </p>
+          <button
+            v-for="note in section.notes"
+            :key="note.Id"
+            class="w-full rounded-2xl border border-transparent bg-neutral-900 p-4 text-left transition hover:bg-neutral-800"
+            :class="{
+              'ring-1 ring-yellow-400': notesStore.selectedId === note.Id,
+            }"
+            @click="emit('select-note', note)"
+          >
+            <p class="truncate text-base font-semibold text-white">
+              {{ note.Title }}
+            </p>
 
-          <p class="mt-3 text-xs text-neutral-500">
-            {{ formatDate(note.CreatedAt) }}
-          </p>
-        </button>
+            <p v-if="getPreview(note)" class="mt-1 line-clamp-2 text-sm text-neutral-400">
+              {{ getPreview(note) }}
+            </p>
+
+            <p class="mt-3 text-xs text-neutral-500">
+              {{ formatDate(note) }}
+            </p>
+          </button>
+        </section>
       </div>
     </div>
   </aside>
