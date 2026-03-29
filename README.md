@@ -15,6 +15,7 @@ A full-stack notes app with a Vue 3 frontend and an ASP.NET Core Web API backend
 - Create, read, update, and delete notes
 - Search notes by title/content
 - Filter notes by all, with content, or empty
+- Sort Date by group with Today, Previous 7 Days, Previous 30 Days, Year
 - Responsive notes layout for desktop and mobile
 
 ## Project Structure
