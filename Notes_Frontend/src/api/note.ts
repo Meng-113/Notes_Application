@@ -1,12 +1,5 @@
-import axios from 'axios'
+import { apiClient, getAuthHeaders } from '@/api/client'
 import type { Note, NoteDraft } from '@/types/note'
-
-const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-})
 
 type NoteResponse = Partial<{
   id: number
@@ -36,22 +29,34 @@ function normalizeNote(note: NoteResponse): Note {
 }
 
 export async function fetchNotes(): Promise<Note[]> {
-  const response = await apiClient.get('/Notes')
+  const response = await apiClient.get('/Notes', {
+    headers: getAuthHeaders(),
+  })
+
   if (!Array.isArray(response.data)) return []
   return response.data.filter(isRecord).map((note) => normalizeNote(note))
 }
 
 export async function createNote(payload: NoteDraft): Promise<Note | null> {
-  const response = await apiClient.post('/Notes', payload)
+  const response = await apiClient.post('/Notes', payload, {
+    headers: getAuthHeaders(),
+  })
+
   return isRecord(response.data) ? normalizeNote(response.data) : null
 }
 
 export async function updateNote(id: number, payload: NoteDraft): Promise<Note | null> {
-  const response = await apiClient.put(`/Notes/${id}`, payload)
+  const response = await apiClient.put(`/Notes/${id}`, payload, {
+    headers: getAuthHeaders(),
+  })
+
   return isRecord(response.data) ? normalizeNote(response.data) : null
 }
 
 export async function deleteNote(id: number): Promise<void> {
-  const response = await apiClient.delete(`/Notes/${id}`)
+  const response = await apiClient.delete(`/Notes/${id}`, {
+    headers: getAuthHeaders(),
+  })
+
   return response.data
 }

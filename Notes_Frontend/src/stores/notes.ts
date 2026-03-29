@@ -26,17 +26,17 @@ export const useNotesStore = defineStore('notes', () => {
   const visibleNotes = computed(() => {
     const query = search.value.trim().toLowerCase()
     return notes.value.filter((note) => {
-      const Content = note.Content || ''
+      const content = note.Content || ''
 
       const matchesSearch =
         query === '' ||
         note.Title.toLowerCase().includes(query) ||
-        Content.toLowerCase().includes(query)
+        content.toLowerCase().includes(query)
 
       if (!matchesSearch) return false
 
-      if (filter.value === 'with-content') return Content.trim().length > 0
-      if (filter.value === 'empty') return Content.trim().length === 0
+      if (filter.value === 'with-content') return content.trim().length > 0
+      if (filter.value === 'empty') return content.trim().length === 0
       return true
     })
   })
@@ -60,6 +60,20 @@ export const useNotesStore = defineStore('notes', () => {
     errorMessage.value = ''
   }
 
+  function resetState() {
+    notes.value = []
+    selectedId.value = null
+    loading.value = false
+    saving.value = false
+    errorMessage.value = ''
+    filter.value = 'all'
+    search.value = ''
+    draft.value = {
+      Title: '',
+      Content: '',
+    }
+  }
+
   function startCreating() {
     selectedId.value = null
     draft.value = {
@@ -81,6 +95,7 @@ export const useNotesStore = defineStore('notes', () => {
   async function loadNotes() {
     loading.value = true
     clearError()
+
     try {
       notes.value = await noteApi.fetchNotes()
     } catch (error) {
@@ -105,6 +120,7 @@ export const useNotesStore = defineStore('notes', () => {
         Title: title,
         Content: draft.value.Content,
       }
+
       if (selectedId.value !== null) {
         await noteApi.updateNote(selectedId.value, payload)
       } else {
@@ -115,11 +131,11 @@ export const useNotesStore = defineStore('notes', () => {
       await loadNotes()
 
       if (selectedId.value !== null) {
-        const lated = notes.value.find((note) => note.Id === selectedId.value)
-        if (lated) {
+        const latest = notes.value.find((note) => note.Id === selectedId.value)
+        if (latest) {
           draft.value = {
-            Title: lated.Title,
-            Content: lated.Content || '',
+            Title: latest.Title,
+            Content: latest.Content || '',
           }
         }
       }
@@ -132,6 +148,7 @@ export const useNotesStore = defineStore('notes', () => {
 
   async function deleteNote() {
     if (selectedId.value === null) return
+
     saving.value = true
     clearError()
 
@@ -145,6 +162,7 @@ export const useNotesStore = defineStore('notes', () => {
       saving.value = false
     }
   }
+
   return {
     notes,
     selectedId,
@@ -157,6 +175,7 @@ export const useNotesStore = defineStore('notes', () => {
     draft,
     visibleNotes,
     editNote,
+    resetState,
     startCreating,
     selectNote,
     loadNotes,
